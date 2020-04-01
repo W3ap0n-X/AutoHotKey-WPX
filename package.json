@@ -1,6 +1,6 @@
 {
-    "name": "fr3-autohotkey",
-    "displayName": "FR3 AutoHotKey",
+    "name": "autohotkey-wpx",
+    "displayName": "AutoHotKey - WPXCode",
     "description": "Syntax highlighting and language features for AHK",
     "version": "0.0.1",
     "publisher": "Weapon-X",
