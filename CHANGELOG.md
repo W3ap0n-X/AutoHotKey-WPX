@@ -1,8 +1,6 @@
 # Change Log
 
-All notable changes to the "fr3-autohotkey" extension will be documented in this file.
-
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+Added most of the basic highlighting, 53 commands and several keywords still missing. 
 
 ## [Unreleased]
 
