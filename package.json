@@ -1,0 +1,26 @@
+{
+    "name": "fr3-autohotkey",
+    "displayName": "FR3 AutoHotKey",
+    "description": "Syntax highlighting and language features for AHK",
+    "version": "0.0.1",
+    "publisher": "Weapon-X",
+    "engines": {
+        "vscode": "^1.43.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "ahk",
+            "aliases": ["AutoHotKey v1", "AutoHotKey", "autohotkey", "AHK", "ahk"],
+            "extensions": [".ahk"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "ahk",
+            "scopeName": "source.ahk",
+            "path": "./syntaxes/ahk.tmLanguage.json"
+        }]
+    }
+}

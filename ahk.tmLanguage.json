@@ -1,0 +1,2288 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "AutoHotKey v1",
+	"patterns": [
+		{
+			"include": "#topLevel"
+		}
+	],
+	"repository": {
+		"topLevel": {
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#labels"
+				},
+				{
+					"include": "#field_assignment"
+				},
+				{
+					"include": "#expression_forced"
+				},
+				{
+					"include": "#operators"
+				}
+			]
+		},
+		"field_assignment": {
+			"patterns": [
+				{
+					"name": "ttkeyword.other.unit.ahk"
+					, "begin": "(?<=^)"
+					, "end": ",|$"
+					, "patterns": [
+						{
+							"include": "#parenthesis"
+						},
+						{
+							"include": "#labels"
+						},
+						{
+							"include": "#comments"
+						},
+						{
+							"include": "#operators"
+						},
+						{
+							"include": "#strings-legacy"
+						},
+						{
+							"include": "#curlybrackets"
+						},
+						{
+							"include": "#squarebrackets"
+						},
+						{
+							"include": "#variables"
+						},
+						{
+							"include": "#function"
+						},
+						{
+							"include": "#expression"
+						},
+						{
+							"include": "#expression_forced"
+						},
+						{
+							"include": "#commands"
+						},
+						{
+							"include": "#built_invars"
+						},
+						{
+							"include": "#built_invars"
+						},
+						{
+							"include": "#built_inkeywords"
+						}
+					]
+				}
+			]
+		},
+		"comments": {
+			"patterns": [
+				{
+					"name": "comment.line.ahk"
+					, "match": "(?:^\\s*|\\s+)(;.*)"
+				},
+				{
+					"name": "comment.block.ahk"
+					, "begin": "(?:^\\s*|\\s+)(\\/\\*)"
+					, "end": "^\\s*(\\*\\/)"
+				}
+			]
+		},
+		"escapes": {
+			"patterns": [
+				{
+					"name": "constant.character.escape.ahk",
+					"match": "`(n|r|;|t)?"
+				}
+			]
+		},
+		"labels": {
+			"patterns": [
+				{
+					"name": "storage.ahk"
+					, "match": "(?<!\\S)\\b([a-zA-Z0-9_\\-]+:{1}$)(?!=)"
+				},
+				{
+					"name": "support.variable.magic.ahk"
+					, "match": "^\\s*(?!;)(\\S+:{2}$)(?!=)"
+				},
+				{
+					"name": "support.variable.magic.ahk"
+					, "match": "^\\s*(?!;)(\\S+:{2})(?=\\S)"
+				}
+			]
+		},
+		"operators-assign": {
+			"patterns": [
+				{
+					"name":"sdfgsdfg.operator.ahk",
+					"match": "([\\<\\>\\!\\.:+-\\/]?[=])"
+				}
+			]
+		},
+		"operators": {
+			"patterns": [
+				{
+					"name":"keyword.operator.logical.ahk",
+					"match": "([\\<\\>\\*\\!\\.:\\+\\-\\/\\?=])+"
+					, "captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#operators-assign"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"curlybrackets": {
+			"patterns": [
+				{
+					"name": "ttkeyword.operator.ahk",
+					"begin": "(\\{)",
+					"end": "(\\})",
+					"patterns": [
+						{
+							"include": "#curlybrackets"
+						},
+						{
+							"include": "#comments"
+						},
+						{
+							"include": "#labels"
+						},
+						{
+							"include": "#expression"
+						},
+						{
+							"include": "#function"
+						},
+						{
+							"include": "#parenthesis"
+						},
+						{
+							"include": "#strings-legacy"
+						},
+						{
+							"include": "#commands"
+						},
+						{
+							"include": "#operators"
+						},
+						{
+							"include": "#built_inkeywords"
+						},
+						{
+							"include": "#built_invars"
+						},
+						{
+							"include": "#squarebrackets"
+						}
+					]
+				}
+			]
+		},
+		"squarebrackets": {
+			"patterns": [
+				{
+					"name": "meta.definition.variable.ahk",
+					"begin": "(\\[)",
+					"end": "(\\])",
+					"patterns": [
+						{
+							"include": "#squarebrackets"
+						},
+						{
+							"include": "#parenthesis"
+						},
+						{
+							"include": "#strings"
+						},
+						{
+							"include": "#function"
+						},
+						{
+							"include": "#operators"
+						}
+					]
+				}
+			]
+		},
+		"parenthesis": {
+			"patterns": [
+				{
+					"name": "ttmeta.function.parameters.ahk",
+					"begin": "(\\()",
+					"end": "(\\))",
+					"patterns": [
+						{
+							"include": "#parenthesis"
+						},
+						{
+							"include": "#functionargs"
+						},
+						{
+							"include": "#built_invars"
+						}
+					]
+				}
+			]
+		},
+		"strings": {
+			"patterns": [
+				{
+					"name": "string.quoted.double.ahk",
+					"begin": "\"",
+					"end": "\"|$",
+					"patterns": [
+						{
+							"include": "#escapes"
+						}
+					]
+				}
+			]
+		},
+		"strings-legacy": {
+			"patterns": [
+				{
+					"name": "string.quoted.double.ahk",
+					"match": "(?<=[^\/\\.\\|\\+=\\-\\*\\:]=).*(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#escapes"
+								},
+								{
+									"include": "#built_invars"
+								},
+								{
+									"include": "#variables"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"variables": {
+			"patterns": [
+				{
+					"name": "variable.ahk",
+					"match": "([%]\\w+[%])",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#escapes"
+								},
+								{
+									"include": "#built_invars"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"expression_forced": {
+			"patterns": [
+				{
+					"name": "meta.definition.variable.ahk",
+					"begin": "((^)|(\\s+))(%)\\s+",
+					"end": ",|$",
+					"patterns": [
+						{
+							"include": "#parenthesis"
+						},
+						{
+							"include": "#strings"
+						},
+						{
+							"include": "#operators"
+						},
+						{
+							"include": "#variables"
+						},
+						{
+							"include": "#built_invars"
+						},
+						{
+							"include": "#function"
+						}
+					]
+				}
+			]
+		},
+		"expression-par": {
+			"patterns": [
+				{
+					"name": "meta.definition.variable.ahk",
+					"begin": "(?<=[\\.:\\+\\-\\/\\|\\<\\>\\!][=])",
+					"end": "(,|(?=\\)))",
+					"patterns": [
+						{
+							"include": "#parenthesis"
+						},
+						{
+							"include": "#squarebrackets"
+						},
+						{
+							"include": "#curlybrackets"
+						},
+						{
+							"include": "#strings"
+						},
+						{
+							"include": "#function"
+						},
+						{
+							"include": "#variables"
+						},
+						{
+							"include": "#built_invars"
+						},
+						{
+							"include": "#operators"
+						}
+					]
+				}
+			]
+		},
+		"expression": {
+			"patterns": [
+				{
+					"name": "meta.definition.variable.ahk",
+					"begin": "(?<=[\\.:\\+\\-\\/\\|\\<\\>\\!][=])",
+					"end": ",|$",
+					"patterns": [
+						{
+							"include": "#parenthesis"
+						},
+						{
+							"include": "#squarebrackets"
+						},
+						{
+							"include": "#curlybrackets"
+						},
+						{
+							"include": "#strings"
+						},
+						{
+							"include": "#function"
+						},
+						{
+							"include": "#variables"
+						},
+						{
+							"include": "#built_invars"
+						},
+						{
+							"include": "#operators"
+						}
+					]
+				}
+			]
+		},
+		"function": {
+			"patterns": [
+				{
+					"name": "entity.name.function.generic"
+					, "match": "(?!;|If)(\\b[\\w]+)(?=\\()"
+					, "captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_infuncs"
+								},
+								{
+									"include": "#"
+								},
+								{
+									"include": "#"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"method": {
+			"patterns": [
+				{
+					"name": "meta.function-call.generic.ahk"
+					, "match": "(?!;|If)(?<=\\.)(\\b[\\w]+\\b)(?=(?:\\(.*)(?:\\)\\s*(?!\\{)))"
+					, "captures": {
+						"0": {
+							"patterns": [
+								{
+
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"functionargs": {
+			"patterns": [
+				{
+					"name": "variable.parameter.ahk",
+					"begin": "(?<=\\(|,)\\s*(?=\\S)",
+					"end": "(,|(?=\\)))",
+					"patterns": [
+						{
+							"include": "#operators"
+						},
+						{
+							"include": "#strings"
+						},
+						{
+							"include": "#parenthesis"
+						},
+						{
+							"include": "#function"
+						},
+						{
+							"include": "#expression-par"
+						}
+					]
+				}
+			]
+		},
+		"commands": {
+			"patterns": [
+				{
+					"include": "#cmd_sleep"
+				},
+				{
+					"include": "#cmd_gosub"
+				},
+				{
+					"include": "#cmd_return"
+				},
+				{
+					"include": "#cmd_coordmode"
+				},
+				{
+					"include": "#cmd_loop"
+				},
+				{
+					"include": "#cmd_strreplace"
+				},
+				{
+					"include": "#cmd_if"
+				},
+				{
+					"include": "#cmd_set"
+				},
+				{
+					"include": "#cmd_settimer"
+				},
+				{
+					"include": "#cmd_msgbox"
+				},
+				{
+					"include": "#cmd_inputbox"
+				},
+				{
+					"include": "#cmd_tooltop"
+				},
+				{
+					"include": "#cmd_progress"
+				},
+				{
+					"include": "#cmd_critical"
+				},
+				{
+					"include": "#cmd_process"
+				},
+				{
+					"include": "#cmd_sysget"
+				},
+				{
+					"include": "#cmd_thread"
+				},
+				{
+					"include": "#cmd_suspend"
+				},
+				{
+					"include": "#cmd_gui"
+				},
+				{
+					"include": "#cmd_guicontrol"
+				},
+				{
+					"include": "#cmd_guicontrolget"
+				},
+				{
+					"include": "#cmd_menu"
+				},
+				{
+					"include": "#cmd_traytip"
+				},
+				{
+					"include": "#cmd_splashimage"
+				},
+				{
+					"include": "#cmd_splashtext"
+				},
+				{
+					"include": "#cmd_statusbarwait"
+				},
+				{
+					"include": "#cmd_statusbargettext"
+				},
+				{
+					"include": "#cmd_strleftright"
+				},
+				{
+					"include": "#cmd_strutil"
+				},
+				{
+					"include": "#cmd_windowset"
+				},
+				{
+					"include": "#cmd_ini"
+				},
+				{
+					"include": "#cmd_reload"
+				},
+				{
+					"include": "#cmd_winact"
+				},
+				{
+					"include": "#cmd_urldownload"
+				},
+				{
+					"include": "#cmd_fileact"
+				},
+				{
+					"include": "#cmd_file"
+				},
+				{
+					"include": "#cmd_filemove"
+				},
+				{
+					"include": "#cmd_envact"
+				},
+				{
+					"include": "#cmd_env"
+				},
+				{
+					"include": "#cmd_blockinput"
+				},
+				{
+					"include": "#cmd_listlines"
+				}
+			]
+		},
+		"built_inkeywords": {
+			"patterns": [
+				{
+					"name": "keyword.ahk"
+					, "match": "\\b(?i:byref|global|static|in|or|and|not|new|for|class|true|false)\\b" 
+				}
+			]
+		},
+		"built_invars": {
+			"patterns": [
+				{
+					"name": "variable.language.this.ahk"
+					, "match": "\\b(?i:a_|a_ahkpath|a_ahkversion|a_appdata|a_appdatacommon|a_args|a_autotrim|a_batchlines|a_caretx|a_carety|a_computername|a_comspec|a_controldelay|a_cursor|a_dd|a_ddd|a_dddd|a_defaultmousespeed|a_desktop|a_desktopcommon|a_detecthiddentext|a_detecthiddenwindows|a_endchar|a_eventinfo|a_exitreason|a_fileencoding|a_formatfloat|a_formatinteger|a_gui|a_guicontrol|a_guicontrolevent|a_guievent|a_guiheight|a_guiwidth|a_guix|a_guiy|a_hour|a_iconfile|a_iconhidden|a_iconnumber|a_icontip|a_index|a_initialworkingdir|a_ipaddress1|a_ipaddress2|a_ipaddress3|a_ipaddress4|a_is64bitos|a_isadmin|a_iscompiled|a_iscritical|a_ispaused|a_issuspended|a_isunicode|a_keydelay|a_language|a_lasterror|a_linefile|a_linenumber|a_loopfield|a_loopfileattrib|a_loopfiledir|a_loopfileext|a_loopfilefullpath|a_loopfilelongpath|a_loopfilename|a_loopfilepath|a_loopfileshortname|a_loopfileshortpath|a_loopfilesize|a_loopfilesizekb|a_loopfilesizemb|a_loopfiletimeaccessed|a_loopfiletimecreated|a_loopfiletimemodified|a_loopreadline|a_loopregkey|a_loopregname|a_loopregsubkey|a_loopregtimemodified|a_loopregtype|a_mday|a_min|a_mm|a_mmm|a_mmmm|a_mon|a_mousedelay|a_msec|a_msgboxresult|a_mydocuments|a_now|a_nowutc|a_numbatchlines|a_ostype|a_osversion|a_priorhotkey|a_priorkey|a_programfiles|a_programs|a_programscommon|a_ptrsize|a_regview|a_screendpi|a_screenheight|a_screenwidth|a_scriptdir|a_scriptfullpath|a_scripthwnd|a_scriptname|a_sec|a_space|a_startmenu|a_startmenucommon|a_startup|a_startupcommon|a_stringcasesense|a_tab|a_temp|a_thisfunc|a_thishotkey|a_thislabel|a_thismenu|a_thismenuitem|a_thismenuitempos|a_tickcount|a_timeidle a_timeidlephysical|a_timesincepriorhotkey|a_timesincethishotkey|a_titlematchmode|a_titlematchmodespeed|a_username|a_wday|a_windelay|a_windir|a_workingdir|a_yday|a_year|a_yweek|a_yyyy|clipboard|clipboardall|comspec|errorlevel|programfiles|this)\\b" 
+				}
+			]
+		},
+		"built_infuncs": {
+			"patterns": [
+				{
+					"name": "meta.function-call.generic"
+					, "match": "(\\b(?i:[O][b][j][e][c][t]|[A][r][r][a][y]|[A][b][s]|[A][s][c]|[A][S][i][n]|[A][C][o][s]|[A][T][a][n]|[C][e][i][l]|[C][h][r]|[C][o][m][O][b][j][A][c][t][i][v][e]|[C][o][m][O][b][j][A][r][r][a][y]|[C][o][m][O][b][j][e][c][t]|[C][o][m][O][b][j][C][r][e][a][t][e]|[C][o][m][O][b][j][C][o][n][n][e][c][t]|[C][o][m][O][b][j][C][r][e][a][t][e]|[C][o][m][O][b][j][e][c][t]|[C][o][m][O][b][j][E][n][w][r][a][p]|[C][o][m][O][b][j][E][r][r][o][r]|[C][o][m][O][b][j][F][l][a][g][s]|[C][o][m][O][b][j][G][e][t]|[C][o][m][O][b][j][M][i][s][s][i][n][g]|[C][o][m][O][b][j][P][a][r][a][m][e][t][e][r]|[C][o][m][O][b][j][Q][u][e][r][y]|[C][o][m][O][b][j][T][y][p][e]|[C][o][m][O][b][j][V][a][l][u][e]|[C][o][s]|[D][l][l][C][a][l][l]|[E][x][c][e][p][t][i][o][n]|[E][x][p]|[F][i][l][e][E][x][i][s][t]|[F][i][l][e][O][p][e][n]|[F][l][o][o][r]|[F][o][r][m][a][t]|[F][u][n][c]|[G][e][t][K][e][y][N][a][m][e]|[G][e][t][K][e][y][V][K]|[G][e][t][K][e][y][S][C]|[I][f]|[I][f][E][q][u][a][l]|[I][f][N][o][t][E][q][u][a][l]|[I][f][E][x][i][s][t]|[I][f][N][o][t][E][x][i][s][t]|[I][f][G][r][e][a][t][e][r]|[I][f][G][r][e][a][t][e][r][O][r][E][q][u][a][l]|[I][n][S][t][r]|[I][f][L][e][s][s]|[I][f][L][e][s][s][O][r][E][q][u][a][l]|[I][f][M][s][g][B][o][x]|[I][f][W][i][n][A][c][t][i][v][e]|[I][f][W][i][n][N][o][t][A][c][t][i][v][e]|[I][f][W][i][n][E][x][i][s][t]|[I][f][W][i][n][N][o][t][E][x][i][s][t]|[I][L][_][C][r][e][a][t][e]|[I][L][_][A][d][d]|[I][L][_][D][e][s][t][r][o][y]|[I][n][p][u][t][H][o][o][k]|[I][n][S][t][r]|[I][s][B][y][R][e][f]|[I][s][F][u][n][c]|[I][s][L][a][b][e][l]|[I][s][O][b][j][e][c][t]|[L][o][a][d][P][i][c][t][u][r][e]|[l][e][n][g][t][h]|[L][o][g]|[L][n]|[L][o][o][p]|[L][V][_][A][d][d]|[L][V][_][D][e][l][e][t][e]|[L][V][_][D][e][l][e][t][e][C][o][l]|[L][V][_][G][e][t][C][o][u][n][t]|[L][V][_][G][e][t][N][e][x][t]|[L][V][_][G][e][t][T][e][x][t]|[L][V][_][I][n][s][e][r][t]|[L][V][_][I][n][s][e][r][t][C][o][l]|[L][V][_][M][o][d][i][f][y]|[L][V][_][M][o][d][i][f][y][C][o][l]|[L][V][_][S][e][t][I][m][a][g][e][L][i][s][t]|[M][a][x]|[M][e][n][u][G][e][t][H][a][n][d][l][e]|[M][e][n][u][G][e][t][N][a][m][e]|[M][i][n]|[M][o][d]|[N][u][m][G][e][t]|[N][u][m][P][u][t]|[O][b][j][A][d][d][R][e][f]|[O][b][j][R][e][l][e][a][s][e]|[O][b][j][B][i][n][d][M][e][t][h][o][d]|[O][b][j][C][l][o][n][e]|[O][b][j][C][o][u][n][t]|[O][b][j][D][e][l][e][t][e]|[O][b][j][G][e][t][A][d][d][r][e][s][s]|[O][b][j][G][e][t][C][a][p][a][c][i][t][y]|[O][b][j][H][a][s][K][e][y]|[O][b][j][I][n][s][e][r][t]|[O][b][j][I][n][s][e][r][t][A][t]|[O][b][j][L][e][n][g][t][h]|[O][b][j][M][a][x][I][n][d][e][x]|[O][b][j][M][i][n][I][n][d][e][x]|[O][b][j][N][e][w][E][n][u][m]|[O][b][j][P][o][p]|[O][b][j][P][u][s][h]|[O][b][j][R][e][m][o][v][e]|[O][b][j][R][e][m][o][v][e][A][t]|[O][b][j][S][e][t][C][a][p][a][c][i][t][y]|[O][b][j][G][e][t][B][a][s][e]|[O][b][j][R][a][w][G][e][t]|[O][b][j][R][a][w][S][e][t]|[O][b][j][S][e][t][B][a][s][e]|[O][n][C][l][i][p][b][o][a][r][d][C][h][a][n][g][e]|[O][n][E][r][r][o][r]|[O][n][M][e][s][s][a][g][e]|[O][r][d]|[R][e][g][E][x][M][a][t][c][h]|[R][e][g][E][x][R][e][p][l][a][c][e]|[R][e][g][i][s][t][e][r][C][a][l][l][b][a][c][k]|[R][o][u][n][d]|[S][B][_][S][e][t][I][c][o][n]|[S][B][_][S][e][t][P][a][r][t][s]|[S][B][_][S][e][t][T][e][x][t]|[S][e][t][E][n][v]|[S][i][n]|[S][q][r][t]|[S][t][r][G][e][t]|[I][n][S][t][r]|[S][t][r][L][e][n]|[S][u][b][S][t][r]|[S][t][r][R][e][p][l][a][c][e]|[S][t][r][S][p][l][i][t]|[S][t][r][P][u][t]|[T][a][n]|[T][r][i][m]|[L][T][r][i][m]|[R][T][r][i][m]|[T][V][_][A][d][d]|[T][V][_][D][e][l][e][t][e]|[T][V][_][G][e][t]|[T][V][_][G][e][t][C][h][i][l][d]|[T][V][_][G][e][t][C][o][u][n][t]|[T][V][_][G][e][t][N][e][x][t]|[T][V][_][G][e][t][P][a][r][e][n][t]|[T][V][_][G][e][t][P][r][e][v]|[T][V][_][G][e][t][S][e][l][e][c][t][i][o][n]|[T][V][_][G][e][t][T][e][x][t]|[T][V][_][M][o][d][i][f][y]|[T][V][_][S][e][t][I][m][a][g][e][L][i][s][t]|[V][a][r][S][e][t][C][a][p][a][c][i][t][y]|[W][i][n][A][c][t][i][v][e]|[W][i][n][E][x][i][s][t])\\b)" 
+				}
+			]
+		},
+		"built_inctrl": {
+			"patterns": [
+				{
+					"name": "keyword.control.ahk",
+					"match": "\\b(?i:break|catch|continue|else|exit|exitapp|finally|for|gosub|goto|if|ifequal|ifexist|ifgreater|ifgreaterorequal|ifinstring|ifless|iflessorequal|ifmsgbox|ifnotequal|ifnotexist|ifnotinstring|ifwinactive|ifwinexist|ifwinnotactive|ifwinnotexist|loop|onexit|pause|return|sleep|try|until|while)\\b"
+				}
+			]
+		},
+		"built_inscript": {
+			"patterns": [
+				{
+					"name": "support.function.builtin.ahk",
+					"match": "\\b(?i:Critical|Process|SysGet|Thread|Suspend|SetBatchLines|SetCapsLockState|SetControlDelay|SetDefaultMouseSpeed|SetFormat|SetKeyDelay|SetMouseDelay|SetNumLockState|SetScrollLockState|SetRegView|SetStoreCapsLockMode|SetTimer|SetTitleMatchMode|SetWinDelay|SetWorkingDir)\\b"
+				}
+			]
+		},
+		"built_insguip": {
+			"patterns": [
+				{
+					"name": "support.function.builtin.ahk",
+					"match": "\\b(?i:msgbox|tooltip|inputbox|progress|GuiControl|guicontrolget|menu|traytip|splashimage|SplashTextOff|SplashTextOn|statusbarwait|StatusBarGetText)\\b"
+				}
+			]
+		},
+		"built_incmd": {
+			"patterns": [
+				{
+					"name": "support.function.builtin.ahk",
+					"match": "\\b(?i:coordmode|StringReplace)\\b"
+				}
+			]
+		},
+		"built_insstrcmd": {
+			"patterns": [
+				{
+					"name": "support.function.builtin.ahk",
+					"match": "\\b(?i:StringLeft|StringRight|StringLower|StringUpper|StringTrimLeft|StringTrimRight|Stringmid|StringGetPos|transform)\\b"
+				}
+			]
+		},
+		"built_insstrutil": {
+			"patterns": [
+				{
+					"name": "support.function.builtin.ahk",
+					"match": "\\b(?i:Autotrim|Stringcasesense|FormatTime|sort|StringLen|random)\\b"
+				}
+			]
+		},
+		"built_inwinset": {
+			"patterns": [
+				{
+					"name": "support.function.builtin.ahk",
+					"match": "\\b(?i:DetectHiddenText|DetectHiddenWindows|WinGetActiveTitle)\\b"
+				}
+			]
+		},
+		"built_inini": {
+			"patterns": [
+				{
+					"name": "support.function.builtin.ahk",
+					"match": "\\b(?i:IniRead|IniWrite|Inidelete)\\b"
+				}
+			]
+		},
+		"built_inreload": {
+			"patterns": [
+				{
+					"name": "support.function.builtin.ahk",
+					"match": "\\b(?i:Edit|Reload|WinMinimizeAll|WinMinimizeAllUndo|EnvUpdate|ListHotkeys|ListVars|KeyHistory)\\b"
+				}
+			]
+		},
+		"built_inwinact": {
+			"patterns": [
+				{
+					"name": "support.function.builtin.ahk",
+					"match": "\\b(?i:WinActivate|WinActivateBottom|WinClose|WinHide|WinKill|WinShow|WinMinimize|WinMaximize|WinRestore|WinWait|WinWaitActive|WinWaitClose|WinWaitNotActive|WinGetPos)\\b"
+				}
+			]
+		},
+		"cmd_statusbargettext": {
+			"patterns": [
+				{
+					"name": "cmd.statusbargettext.ahk",
+					"match": "(\\b(?i:StatusBarGetText)\\b\\s*(,)\\s*(.)*\\s*(,)\\s*(.)*\\s*(,)?\\s*(.)*\\s*(,)?\\s*(.)*\\s*(,)?\\s*(.)*\\s*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_insguip"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "cmd.statusbargettext.ahk",
+					"match": "(\\b(?i:StatusBarGetText)\\b\\s*(,|%)?\\s*([^,])*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_insguip"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_statusbarwait": {
+			"patterns": [
+				{
+					"name": "cmd.statusbarwait.ahk",
+					"match": "(\\b(?i:statusbarwait)\\b\\s*(,)?\\s*(.)*\\s*(,)?\\s*(.)*\\s*(,)?\\s*(.)*\\s*(,)?\\s*(.)*\\s*(,)?\\s*(.)*\\s*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_insguip"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_splashtext": {
+			"patterns": [
+				{
+					"name": "cmd.splashtext.ahk",
+					"match": "(\\b(?i:splashtexton)\\b\\s*(,)\\s*(.)*\\s*(,)?\\s*(.)*\\s*(,)?\\s*(.)*\\s*(,)?\\s*(.)*\\s*(,)?\\s*(.)*\\s*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_insguip"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "cmd.splashimage.ahk",
+					"match": "(\\b(?i:splashtexton|splashtextoff)\\b\\s*(,|%)?\\s*([^,])*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_insguip"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_splashimage": {
+			"patterns": [
+				{
+					"name": "cmd.splashimage.ahk",
+					"match": "(\\b(?i:splashimage)\\b\\s*(,)\\s*(.)*\\s*(,)\\s*(.)*\\s*(,)?\\s*(.)*\\s*(,)?\\s*(.)*\\s*(,)?\\s*(.)*\\s*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_insguip"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "cmd.splashimage.ahk",
+					"match": "(\\b(?i:splashimage)\\b\\s*(,|%)?\\s*([^,])*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_insguip"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_traytip": {
+			"patterns": [
+				{
+					"name": "cmd.traytip.ahk",
+					"match": "(\\b(?i:traytip)\\b\\s*(,|%)?\\s*(.)*\\s*(,)?\\s*(.)*\\s*(,)?\\s*(.)*\\s*(,)?\\s*(.)*\\s*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_insguip"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_menu": {
+			"patterns": [
+				{
+					"name": "cmd.menu.ahk",
+					"match": "(\\b(?i:menu)\\b\\s*(,)\\s*.*\\s*(,)\\s*(.)*(?i:Add|Insert|Delete|DeleteAll|Rename|Check|Uncheck|ToggleCheck|Enable|Disable|ToggleEnable|Default|NoDefault|Standard|NoStandard|Icon|NoIcon|Tip|Show|Color|Click|MainWindow|NoMainWindow|UseErrorLevel)?\\s*(,)?\\s*(.)*\\s*(,)?\\s*(.)*(,)?\\s*(.)*\\s*(,)?\\s*(.)*\\s*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_insguip"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								},
+								{
+									"name":"keyword.ahk"
+									, "match": "\\b(?i:Add|Insert|Delete|DeleteAll|Rename|Check|Uncheck|ToggleCheck|Enable|Disable|ToggleEnable|Default|NoDefault|Standard|NoStandard|Icon|NoIcon|Tip|Show|Color|Click|MainWindow|NoMainWindow|UseErrorLevel)\\s*(?=,|$)"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_guicontrolget": {
+			"patterns": [
+				{
+					"name": "cmd.guicontrolget.ahk",
+					"match": "(\\b(?i:guicontrolget)\\b\\s*(,)\\s*.*\\s*(,)?\\s*(.)*(?i:pos|focus|focusv|enabled|visible|hwnd|name)?\\s*(,)?\\s*(.)*\\s*(,)?\\s*(.)*\\s*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_insguip"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								},
+								{
+									"name":"keyword.ahk"
+									, "match": "\\b(?i:pos|focus|focusv|enabled|visible|hwnd|name)\\s*(?=,|$)"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_guicontrol": {
+			"patterns": [
+				{
+					"name": "cmd.guicontrol.ahk",
+					"match": "(\\b(?i:GuiControl)\\b\\s*(,)\\s*(.)*(?i:movedraw|move|focus|disable|Enable|Hide|Show|Delete|Choose|ChooseString|Font|Options)?\\s*(,)\\s*(.)*\\s*(,)?\\s*(.)*\\s*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_insguip"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								},
+								{
+									"name":"keyword.ahk"
+									, "match": "\\b(?i:movedraw|move|focus|disable|Enable|Hide|Show|Delete|Choose|ChooseString|Font|Options)\\s*(?=,)"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_gui": {
+			"patterns": [
+				{
+					"name": "cmd.gui.all.ahk",
+					"begin": "^\\s*(?=(\\b(?i:gui)\\b))"
+					, "end": "($)"
+					, "patterns": [
+						{
+							"name": "cmd.gui.ahk"
+							, "match": "(\\b(?i:gui)\\s*,.*)"
+							, "captures": {
+								"0": {
+									"patterns" :[
+										{
+											"name": "cmd.gui.subcommand.ahk"
+											, "match": "(\\b(?i:tab)\\s*)"
+											, "captures": {
+												"0": {
+													"patterns" :[
+														{
+															"name":"variable.other.object.ahk.ahk"
+															, "match": "\\b(?i:tab)\\b"
+														},
+														{
+															"include": "#expression_forced"
+														},
+														{
+															"include": "#variables"
+														}
+													]
+												}
+											}
+										},
+										{
+											"name": "cmd.gui.subcommand.ahk"
+											, "match": "(\\b(?i:destroy|default|minimize|maximize|restore|cancel|hide)\\s*)"
+											, "captures": {
+												"0": {
+													"patterns" :[
+														{
+															"name":"keyword.ahk"
+															, "match": "\\b(?i:destroy|default|minimize|maximize|restore|cancel|hide)\\b"
+														},
+														{
+															"include": "#expression_forced"
+														},
+														{
+															"include": "#variables"
+														}
+													]
+												}
+											}
+										},
+										{
+											"name": "cmd.gui.subcommand.ahk"
+											, "match": "(\\b(?i:new)\\s*.*)"
+											, "captures": {
+												"0": {
+													"patterns" :[
+														{
+															"name":"keyword.ahk"
+															, "match": "\\b(?i:new)\\b"
+														},
+														{
+															"include": "#expression_forced"
+														},
+														{
+															"include": "#variables"
+														}
+													]
+												}
+											}
+										},
+										{
+											"name": "cmd.gui.subcommand.ahk"
+											, "match": "(\\b(?i:show)\\s*.*)"
+											, "captures": {
+												"0": {
+													"patterns" :[
+														{
+															"name":"keyword.ahk"
+															, "match": "\\b(?i:show)\\b"
+														},
+														{
+															"include": "#expression_forced"
+														},
+														{
+															"include": "#variables"
+														}
+													]
+												}
+											}
+										},
+										{
+											"name": "cmd.gui.subcommand.ahk"
+											, "match": "(\\b(?i:submit)\\s*.*)"
+											, "captures": {
+												"0": {
+													"patterns" :[
+														{
+															"name":"keyword.ahk"
+															, "match": "\\b(?i:submit)\\b"
+														},
+														{
+															"include": "#expression_forced"
+														},
+														{
+															"include": "#variables"
+														}
+													]
+												}
+											}
+										},
+										{
+											"name": "cmd.gui.subcommand.ahk"
+											, "match": "(\\b(?i:font)\\s*.*)"
+											, "captures": {
+												"0": {
+													"patterns" :[
+														{
+															"name":"keyword.ahk"
+															, "match": "\\b(?i:font)\\b"
+														},
+														{
+															"include": "#expression_forced"
+														},
+														{
+															"include": "#variables"
+														}
+													]
+												}
+											}
+										},
+										{
+											"name": "cmd.gui.subcommand.ahk"
+											, "match": "(\\b(?i:color)\\s*.*)"
+											, "captures": {
+												"0": {
+													"patterns" :[
+														{
+															"name":"keyword.ahk"
+															, "match": "\\b(?i:color)\\b"
+														},
+														{
+															"include": "#expression_forced"
+														},
+														{
+															"include": "#variables"
+														}
+													]
+												}
+											}
+										},
+										{
+											"name": "cmd.gui.subcommand.ahk"
+											, "match": "(\\b(?i:margin)\\s*.*)"
+											, "captures": {
+												"0": {
+													"patterns" :[
+														{
+															"name":"keyword.ahk"
+															, "match": "\\b(?i:margin)\\b"
+														},
+														{
+															"include": "#expression_forced"
+														},
+														{
+															"include": "#variables"
+														}
+													]
+												}
+											}
+										},
+										{
+											"name": "cmd.gui.subcommand.ahk"
+											, "match": "(\\b(?i:menu)\\s*.*)"
+											, "captures": {
+												"0": {
+													"patterns" :[
+														{
+															"name":"keyword.ahk"
+															, "match": "\\b(?i:menu)\\b"
+														},
+														{
+															"include": "#expression_forced"
+														},
+														{
+															"include": "#variables"
+														}
+													]
+												}
+											}
+										},
+										{
+											"name": "cmd.gui.subcommand.ahk"
+											, "match": "(\\b(?i:flash)\\s*.*)"
+											, "captures": {
+												"0": {
+													"patterns" :[
+														{
+															"name":"keyword.ahk"
+															, "match": "\\b(?i:flash)\\b"
+														},
+														{
+															"include": "#expression_forced"
+														},
+														{
+															"include": "#variables"
+														}
+													]
+												}
+											}
+										},
+										{
+											"name": "cmd.gui.subcommand.ahk"
+											, "match": "(\\b(?i:Add)\\s*.*)"
+											, "captures": {
+												"0": {
+													"patterns" :[
+														{
+															"name": "cmd.gui.subcommand.add.ahk"
+															, "match": "(\\b(?i:Text|Edit|UpDown|Picture|Button|Checkbox|Radio|DropDownList|ComboBox|ListBox|ListView|TreeView|Link|Hotkey|DateTime|MonthCal|Slider|Progress|GroupBox|Tab|Tab2|Tab3|StatusBar)\\s*.*)"
+															, "captures": {
+																"0": {
+																	"patterns" :[
+																		{
+																			"name": "cmd.gui.subcommand.add.options.ahk"
+																			, "begin": "(?i:(?<=Text|Edit|UpDown|Picture|Button|Checkbox|Radio|DropDownList|ComboBox|ListBox|ListView|TreeView|Link|Hotkey|DateTime|MonthCal|Slider|Progress|GroupBox|Tab|Tab2|Tab3|StatusBar)\\s*,)"
+																			, "end": "($)"
+																			, "patterns" :[
+																				{
+																					"include": "#expression_forced"
+																				},
+																				{
+																					"include": "#variables"
+																				}
+																			]
+																		},
+																		{
+																			"name":"variable.other.object.ahk"
+																			, "match": "\\b(?i:Text|Edit|UpDown|Picture|Button|Checkbox|Radio|DropDownList|ComboBox|ListBox|ListView|TreeView|Link|Hotkey|DateTime|MonthCal|Slider|Progress|GroupBox|Tab|Tab2|Tab3|StatusBar)\\s*(?=,|$)"
+																		},
+																		{
+																			"include": "#expression_forced"
+																		},
+																		{
+																			"include": "#variables"
+																		}
+																	]
+																}
+															}
+														},
+														{
+															"include": "#expression_forced"
+														},
+														{
+															"include": "#variables"
+														},
+														{
+															"name":"keyword.ahk"
+															, "match": "\\b(?i:Add)\\b"
+														}
+													]
+												}
+											}
+										},
+										{
+											"include": "#comments"
+										},
+										{
+											"include": "#variables"
+										},
+										{
+											"name":"support.function.builtin.ahk"
+											, "match": "\\b(?i:gui)\\b"
+										}
+									]
+								}
+							}
+						},
+						{
+							"name":"support.function.builtin.ahk"
+							, "match": "\\b(?i:gui)\\b"
+						}
+					]
+				}
+			]
+		},
+		"cmd_sleep": {
+			"patterns": [
+				{
+					"name": "cmd.sleep.ahk",
+					"match": "(\\b(?i:[s][l][e][e][p])\\b\\s*(%|,).*)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_inctrl"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_loop": {
+			"patterns": [
+				{
+					"name": "cmd.loop.ahk",
+					"match": "(\\b(?i:loop|break)\\b\\s*.*)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_inctrl"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_suspend": {
+			"patterns": [
+				{
+					"name": "cmd.suspend.ahk",
+					"match": "(\\b(?i:Suspend)\\b\\s*(%|,)?.*)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_inscript"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"name": "keyword.ahk"
+									, "match": "(\\b(?i:On|Off|Toggle|Permit)\\b)"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_set": {
+			"patterns": [
+				{
+					"name": "cmd.set.ahk",
+					"match": "(\\b(?i:SetBatchLines|SetCapsLockState|SetControlDelay|SetDefaultMouseSpeed|SetFormat|SetKeyDelay|SetMouseDelay|SetNumLockState|SetScrollLockState|SetRegView|SetStoreCapsLockMode|SetTitleMatchMode|SetWinDelay)\\b\\s*(%|,).*)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_inscript"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_thread": {
+			"patterns": [
+				{
+					"name": "cmd.thread.ahk",
+					"match": "(\\b(?i:thread)\\b\\s*(,)\\s*(?i:NoTimers|Priority|Interrupt)*\\s*(,)?\\s*(.)*\\s(,)?(.)*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_inscript"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"name": "keyword.ahk"
+									, "match": "(\\b(?i:NoTimers|Priority|Interrupt)\\b)"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_sysget": {
+			"patterns": [
+				{
+					"name": "cmd.sysget.ahk",
+					"match": "(\\b(?i:sysget)\\b\\s*(,)\\s*(.)*\\s*(,)\\s*(?i:MonitorCount|MonitorPrimary|Monitor|MonitorWorkArea|MonitorName)*\\s*(,)?.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_inscript"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"name": "keyword.ahk"
+									, "match": "(\\b(?i:MonitorCount|MonitorPrimary|Monitor|MonitorWorkArea|MonitorName)\\b)"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_process": {
+			"patterns": [
+				{
+					"name": "cmd.process.ahk",
+					"match": "(\\b(?i:process)\\b\\s*(,)\\s*(?i:exist|close|priority|wait|waitclose)\\s*(,)?\\s*.*\\s*(,)?.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_inscript"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"name": "keyword.ahk"
+									, "match": "(\\b(?i:exist|close|priority|wait|waitclose)\\b)"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_critical": {
+			"patterns": [
+				{
+					"name": "cmd.critical.ahk",
+					"match": "(\\b(?i:critical)\\b\\s*(%|,)?.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_inscript"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"name": "keyword.ahk"
+									, "match": "(\\b(?i:on|off)\\b)"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_settimer": {
+			"patterns": [
+				{
+					"name": "cmd.settimer.ahk",
+					"match": "(\\b(?i:SetTimer)\\b\\s*(%|,)?.*(,)?\\s(?i:on|off|delete|default|(\\d*))(,)?\\s*(?i:[a-zA-Z0-9_\\-%]|\\d)*\\s*)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_inscript"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"name": "keyword.ahk"
+									, "match": "(\\b(?i:on|off|delete|default)\\b)"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_gosub": {
+			"patterns": [
+				{
+					"name": "cmd.gosub.ahk",
+					"match": "(\\b(?i:gosub|goto)\\b\\s*(%|,)\\s*[%a-zA-Z0-9_\\-]+)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_inctrl"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_return": {
+			"patterns": [
+				{
+					"name": "cmd.return.ahk",
+					"match": "(\\b(?i:return|exit)\\b\\s*(%|,)?\\s*.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_inctrl"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_if": {
+			"patterns": [
+				{
+					"name": "cmd.if.ahk",
+					"match": "(\\b(?i:if|else if|else|ifequal|ifexist|ifgreater|ifgreaterorequal|ifinstring|ifless|iflessorequal|ifmsgbox|ifnotequal|ifnotexist|ifnotinstring|ifwinactive|ifwinexist|ifwinnotactive|ifwinnotexist)\\b\\s*(%|,|\\()?\\s*.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_inctrl"
+								},
+								{
+									"include": "#function"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#built_invars"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#parenthesis"
+								},
+								{
+									"include": "#operators"
+								},
+								{
+									"include": "#squarebrackets"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_coordmode": {
+			"patterns": [
+				{
+					"name": "cmd.coordmode.ahk",
+					"match": "(\\b(?i:coordmode)\\b\\s*,\\s*(?i:ToolTip|Pixel|Mouse|Caret|Menu)\\s*,\\s*(?i:Screen|Relative|Window|Client)\\s*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_incmd"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"name": "keyword.ahk",
+									"match": "\\s*(\\b(?i:ToolTip|Pixel|Mouse|Caret|Menu)\\b)\\s*"
+								},
+								{
+									"name": "keyword.ahk",
+									"match": "\\s*(\\b(?i:Screen|Relative|Window|Client)\\b)\\s*"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_progress": {
+			"patterns": [
+				{
+					"name": "cmd.progress.ahk",
+					"match": "(\\b(?i:progress)\\b\\s*(,)\\s*(.)*\\s*(,)\\s*(.)*\\s*(,)?\\s*(.)*\\s*(,)?\\s*(.)*\\s*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_insguip"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "cmd.progress.ahk",
+					"match": "(\\b(?i:progress)\\b\\s*(,|%)\\s*([^,])*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_insguip"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_tooltop": {
+			"patterns": [
+				{
+					"name": "cmd.tooltip.ahk",
+					"match": "(\\b(?i:tooltip)\\b\\s*(,|%)?\\s*(.)*\\s*(,)?\\s*(.)*\\s*(,)?\\s*(.)*\\s*(,)?\\s*(.)*\\s*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_insguip"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_inputbox": {
+			"patterns": [
+				{
+					"name": "cmd.inputbox.ahk",
+					"match": "(\\b(?i:inputbox)\\b\\s*(,)\\s*(.)*\\s*(,)?\\s*(.)*\\s*(,)?\\s*(.)*\\s*(,)?\\s*(.)*\\s*(,)?\\s*(.)*\\s*(,)?\\s*(.)*\\s*(,)?\\s*(.)*\\s*(,)?\\s*(.)*\\s*(,)?\\s*(.)*\\s*(,)?\\s*(.)*\\s*(,)?\\s*(.)*\\s*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_insguip"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_msgbox": {
+			"patterns": [
+				{
+					"name": "cmd.msgbox.ahk",
+					"match": "(\\b(?i:msgbox)\\b\\s*(,)\\s*(.)*\\s*(,)\\s*(.)*\\s*(,)\\s*(.)*\\s*(,)?\\s*(.)*\\s*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_insguip"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "cmd.msgbox.ahk",
+					"match": "(\\b(?i:msgbox)\\b\\s*(,|%)?\\s*([^,])*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_insguip"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_strreplace": {
+			"patterns": [
+				{
+					"name": "cmd.stringreplace.ahk",
+					"match": "(\\b(?i:StringReplace)\\b\\s*,\\s*(.)*\\s*,\\s*(.)*\\s*,?\\s*(.)*\\s*,?\\s*(?i:1|a|all)?\\s*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_incmd"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								},
+								{
+									"name": "keyword.ahk",
+									"match": "\\s*(\\b(?i:UseErrorLevel|All|A|1)\\b)\\s*"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_strleftright": {
+			"patterns": [
+				{
+					"name": "cmd.stringreplace.ahk",
+					"match": "(\\b(?i:StringLeft|StringRight|StringLower|StringUpper|StringTrimLeft|StringTrimRight|Stringmid|StringGetPos|transform)\\s*(,)\\s*(.)*\\s*(,)\\s*(.)*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_insstrcmd"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_strutil": {
+			"patterns": [
+				{
+					"name": "cmd.stringreplace.ahk",
+					"match": "(\\b(?i:Autotrim|Stringcasesense|FormatTime|sort|StringLen|random)\\s*(,)\\s*(.)*\\s*(,)?\\s*(.)*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_insstrutil"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_windowset": {
+			"patterns": [
+				{
+					"name": "cmd.window.set.ahk",
+					"match": "(\\b(?i:DetectHiddenText|DetectHiddenWindows|WinGetActiveTitle)\\s*(,)\\s*(.)*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_inwinset"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_ini": {
+			"patterns": [
+				{
+					"name": "cmd.ini.ahk",
+					"match": "(\\b(?i:IniRead|IniWrite|Inidelete)\\s*(,)\\s*(.)*(,)\\s*(.)*(,)?\\s*(.)*(,)?\\s*(.)*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_inini"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_reload": {
+			"patterns": [
+				{
+					"name": "cmd.ini.ahk",
+					"match": "(\\b(?i:Edit|Reload|WinMinimizeAll|WinMinimizeAllUndo|EnvUpdate|ListHotkeys|ListVars|KeyHistory)\\s*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_inreload"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_winact": {
+			"patterns": [
+				{
+					"name": "cmd.ini.ahk",
+					"match": "(\\b(?i:WinActivate|WinActivateBottom|WinClose|WinHide|WinKill|WinShow|WinMinimize|WinMaximize|WinRestore|WinWait|WinWaitActive|WinWaitClose|WinWaitNotActive|WinGetPos)\\s*.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#built_inwinact"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_urldownload": {
+			"patterns": [
+				{
+					"name": "cmd.ini.ahk",
+					"match": "(\\b(?i:URLDownloadToFile)\\s*,\\s*.*,[^,]*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:URLDownloadToFile)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_fileact": {
+			"patterns": [
+				{
+					"name": "cmd.ini.ahk",
+					"match": "(\\b(?i:FileSetAttrib|SplitPath|FileSelectFolder|FileRemoveDir|FileSelectFile|FileRecycle|FileGetTime|FileGetSize|FileGetShortcut|FileGetAttrib|FileDelete|FileCreateDir|FileGetVersion)\\s*,.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:FileSetAttrib|SplitPath|FileSelectFolder|FileRemoveDir|FileSelectFile|FileRecycle|FileGetTime|FileGetSize|FileGetShortcut|FileGetAttrib|FileDelete|FileCreateDir|FileGetVersion)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_file": {
+			"patterns": [
+				{
+					"name": "cmd.ini.ahk",
+					"match": "(\\b(?i:FileRecycleEmpty|FileSetTime|FileEncoding|FileAppend)\\s*.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:FileRecycleEmpty|FileSetTime|FileEncoding|FileAppend)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_filemove": {
+			"patterns": [
+				{
+					"name": "cmd.ini.ahk",
+					"match": "(\\b(?i:FileRead|FileMove|FileMoveDir|FileInstall|FileCreateShortcut|FileCopy|DriveSpaceFree|FileCopyDir)\\s*,.*\\s*,\\s*.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:FileRead|FileMove|FileMoveDir|FileInstall|FileCreateShortcut|FileCopy|DriveSpaceFree|FileCopyDir)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_envact": {
+			"patterns": [
+				{
+					"name": "cmd.ini.ahk",
+					"match": "(\\b(?i:RegDelete|OutputDebug|PostMessage|Shutdown)\\s*,.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:RegDelete|OutputDebug|PostMessage|Shutdown)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_env": {
+			"patterns": [
+				{
+					"name": "cmd.ini.ahk",
+					"match": "(\\b(?i:EnvGet|EnvSet|RegRead|RegWrite|GetKeyState)\\s*,.*,.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:EnvGet|EnvSet|RegRead|RegWrite|GetKeyState)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_blockinput": {
+			"patterns": [
+				{
+					"name": "cmd.ini.ahk",
+					"match": "(\\b(?i:BlockInput|KeyWait|Hotkey)\\s*,.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:BlockInput|KeyWait|Hotkey)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_listlines": {
+			"patterns": [
+				{
+					"name": "cmd.ini.ahk",
+					"match": "(\\b(?i:ClipWait|ListLines|OnExit|Input)\\s*,?.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:ClipWait|ListLines|OnExit|Input)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		}
+	},
+	"scopeName": "source.ahk"
+}
