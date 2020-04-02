@@ -619,6 +619,39 @@
 				},
 				{
 					"include": "#cmd_winget"
+				},
+				{
+					"include": "#cmd_controlset"
+				},
+				{
+					"include": "#cmd_controlgetex"
+				},
+				{
+					"include": "#cmd_winsettitle"
+				},
+				{
+					"include": "#cmd_winmove"
+				},
+				{
+					"include": "#cmd_winmenuselectitem"
+				},
+				{
+					"include": "#cmd_controlmove"
+				},
+				{
+					"include": "#cmd_winset"
+				},
+				{
+					"include": "#cmd_drive"
+				},
+				{
+					"include": "#cmd_control"
+				},
+				{
+					"include": "#cmd_driveget"
+				},
+				{
+					"include": "#cmd_controlget"
 				}
 			]
 		},
@@ -1434,7 +1467,7 @@
 			"patterns": [
 				{
 					"name": "cmd.set.ahk",
-					"match": "(\\b(?i:SetBatchLines|SetCapsLockState|SetControlDelay|SetDefaultMouseSpeed|SetFormat|SetKeyDelay|SetMouseDelay|SetNumLockState|SetScrollLockState|SetRegView|SetStoreCapsLockMode|SetTitleMatchMode|SetWinDelay)\\b\\s*(%|,).*)",
+					"match": "(\\b(?i:SetBatchLines|SetCapsLockState|SetControlDelay|SetDefaultMouseSpeed|SetFormat|SetKeyDelay|SetMouseDelay|SetNumLockState|SetScrollLockState|SetRegView|SetStoreCapsLockMode|SetTitleMatchMode|SetWinDelay|SetWorkingDir)\\b\\s*(%|,).*)",
 					"captures": {
 						"0": {
 							"patterns": [
@@ -2690,6 +2723,414 @@
 								{
 									"name": "support.function.builtin.ahk",
 									"match": "\\b(?i:WinGetActiveTitle|WinGetActiveStats|WinGetClass|WinGet|WinGetText|WinGetTitle)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_controlset": {
+			"patterns": [
+				{
+					"name": "cmd.controlset.ahk",
+					"match": "(\\b(?i:ControlGetPos|ControlSetText|ControlSend|ControlSendRaw)\\s*,?.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:ControlGetPos|ControlSetText|ControlSend|ControlSendRaw)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_controlgetex": {
+			"patterns": [
+				{
+					"name": "cmd.controlget.ahk",
+					"match": "(\\b(?i:ControlGetFocus|ControlGetText|ControlClick|ControlFocus)\\s*,?.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:ControlGetFocus|ControlGetText|ControlClick|ControlFocus)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_winsettitle": {
+			"patterns": [
+				{
+					"name": "cmd.winsettitle.ahk",
+					"match": "(\\b(?i:WinSetTitle)\\b\\s*(,)\\s*(.)*\\s*(,)\\s*(.)*\\s*(,)\\s*(.)*\\s*(,)?\\s*(.)*\\s*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:WinSetTitle)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "cmd.winsettitle.ahk",
+					"match": "(\\b(?i:WinSetTitle)\\b\\s*(,|%)?\\s*([^,])*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:WinSetTitle)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_winmove": {
+			"patterns": [
+				{
+					"name": "cmd.winmove.ahk",
+					"match": "(\\b(?i:WinMove)\\b\\s*(,)\\s*(.)*\\s*(,)\\s*(.)*\\s*(,)\\s*(.)*\\s*(,)\\s*(.)*\\s*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:WinMove)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "cmd.winmove.ahk",
+					"match": "(\\b(?i:WinMove)\\b\\s*(,|%)?\\s*.*,([^,])*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:WinMove)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_winmenuselectitem": {
+			"patterns": [
+				{
+					"name": "cmd.winget.ahk",
+					"match": "(\\b(?i:WinMenuSelectItem)\\s*,.*,.*,.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:WinMenuSelectItem)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_controlmove": {
+			"patterns": [
+				{
+					"name": "cmd.controlmove.ahk",
+					"match": "(\\b(?i:ControlMove)\\s*,.*,.*,.*,.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:ControlMove)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_winset": {
+			"patterns": [
+				{
+					"name": "cmd.winset.ahk",
+					"match": "(\\b(?i:WinSet)\\s*,.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:WinSet)\\b"
+								},
+								{
+									"name": "keyword.ahk",
+									"match": "\\b(?i:AlwaysOnTop|Bottom|Top|Disable|Enable|Redraw|Style|ExStyle|Region|Transparent|Transcolor)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_drive": {
+			"patterns": [
+				{
+					"name": "cmd.drive.ahk",
+					"match": "(\\b(?i:Drive)\\s*,.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:Drive)\\b"
+								},
+								{
+									"name": "keyword.ahk",
+									"match": "\\b(?i:Label|Lock|Unlock|Eject)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_driveget": {
+			"patterns": [
+				{
+					"name": "cmd.drive.ahk",
+					"match": "(\\b(?i:DriveGet)\\s*,.*,.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:DriveGet)\\b"
+								},
+								{
+									"name": "keyword.ahk",
+									"match": "\\b(?i:List|Capacity|FileSystem|Label|Serial|Type|Status|StatusCD)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_control": {
+			"patterns": [
+				{
+					"name": "cmd.control.ahk",
+					"match": "(\\b(?i:Control)\\s*,.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:Control)\\b"
+								},
+								{
+									"name": "keyword.ahk",
+									"match": "\\b(?i:Check|Uncheck|Enable|Disable|Show|Hide|Style|ExStyle|ShowDropDown|HideDropDown|TabLeft|TabRight|Add|Delete|Choose|ChooseString|EditPaste)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_controlget": {
+			"patterns": [
+				{
+					"name": "cmd.controlget.ahk",
+					"match": "(\\b(?i:ControlGet)\\s*,.*,.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:ControlGet)\\b"
+								},
+								{
+									"name": "keyword.ahk",
+									"match": "\\b(?i:List|Checked|Enabled|Visible|Tab|FindString|Choice|LineCount|CurrentLine|CurrentCol|Line|Selected|Style|ExStyle|Hwnd)\\b"
 								},
 								{
 									"include": "#variables"
