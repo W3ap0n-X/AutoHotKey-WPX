@@ -652,6 +652,9 @@
 				},
 				{
 					"include": "#cmd_controlget"
+				},
+				{
+					"include": "#dir_sa"
 				}
 			]
 		},
@@ -3131,6 +3134,36 @@
 								{
 									"name": "keyword.ahk",
 									"match": "\\b(?i:List|Checked|Enabled|Visible|Tab|FindString|Choice|LineCount|CurrentLine|CurrentCol|Line|Selected|Style|ExStyle|Hwnd)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"dir_sa": {
+			"patterns": [
+				{
+					"name": "directive.ahk",
+					"match": "(\\s*(?i:#NoEnv|#Persistent|#NoTrayIcon|#ErrorStdOut|#InstallKeybdHook|#WinActivateForce|#InstallMouseHook)\\s*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "(?i:#NoEnv|#Persistent|#NoTrayIcon|#ErrorStdOut|#InstallKeybdHook|#WinActivateForce|#InstallMouseHook)\\b"
 								},
 								{
 									"include": "#variables"
