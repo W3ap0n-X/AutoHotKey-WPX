@@ -263,9 +263,6 @@
 									"include": "#escapes"
 								},
 								{
-									"include": "#built_invars"
-								},
-								{
 									"include": "#variables"
 								}
 							]
@@ -583,6 +580,45 @@
 				},
 				{
 					"include": "#cmd_listlines"
+				},
+				{
+					"include": "#cmd_imgsearch"
+				},
+				{
+					"include": "#cmd_pixcolor"
+				},
+				{
+					"include": "#cmd_group"
+				},
+				{
+					"include": "#cmd_run"
+				},
+				{
+					"include": "#cmd_send"
+				},
+				{
+					"include": "#cmd_mouse"
+				},
+				{
+					"include": "#cmd_mousemove"
+				},
+				{
+					"include": "#cmd_mousedrag"
+				},
+				{
+					"include": "#cmd_sound"
+				},
+				{
+					"include": "#cmd_soundbeep"
+				},
+				{
+					"include": "#cmd_filereadline"
+				},
+				{
+					"include": "#cmd_sendmode"
+				},
+				{
+					"include": "#cmd_winget"
 				}
 			]
 		},
@@ -662,7 +698,7 @@
 			"patterns": [
 				{
 					"name": "support.function.builtin.ahk",
-					"match": "\\b(?i:DetectHiddenText|DetectHiddenWindows|WinGetActiveTitle)\\b"
+					"match": "\\b(?i:DetectHiddenText|DetectHiddenWindows)\\b"
 				}
 			]
 		},
@@ -1931,7 +1967,7 @@
 			"patterns": [
 				{
 					"name": "cmd.window.set.ahk",
-					"match": "(\\b(?i:DetectHiddenText|DetectHiddenWindows|WinGetActiveTitle)\\s*(,)\\s*(.)*)(?=$)",
+					"match": "(\\b(?i:DetectHiddenText|DetectHiddenWindows)\\s*(,)\\s*(.)*)(?=$)",
 					"captures": {
 						"0": {
 							"patterns": [
@@ -2167,13 +2203,13 @@
 			"patterns": [
 				{
 					"name": "cmd.ini.ahk",
-					"match": "(\\b(?i:RegDelete|OutputDebug|PostMessage|Shutdown)\\s*,.*)(?=$)",
+					"match": "(\\b(?i:RegDelete|OutputDebug|PostMessage|Shutdown|SendMessage)\\s*,.*)(?=$)",
 					"captures": {
 						"0": {
 							"patterns": [
 								{
 									"name": "support.function.builtin.ahk",
-									"match": "\\b(?i:RegDelete|OutputDebug|PostMessage|Shutdown)\\b"
+									"match": "\\b(?i:RegDelete|OutputDebug|PostMessage|Shutdown|SendMessage)\\b"
 								},
 								{
 									"include": "#variables"
@@ -2257,13 +2293,403 @@
 			"patterns": [
 				{
 					"name": "cmd.ini.ahk",
-					"match": "(\\b(?i:ClipWait|ListLines|OnExit|Input)\\s*,?.*)(?=$)",
+					"match": "(\\b(?i:ClipWait|ListLines|OnExit|Input|RunAs)\\s*,?.*)(?=$)",
 					"captures": {
 						"0": {
 							"patterns": [
 								{
 									"name": "support.function.builtin.ahk",
-									"match": "\\b(?i:ClipWait|ListLines|OnExit|Input)\\b"
+									"match": "\\b(?i:ClipWait|ListLines|OnExit|Input|RunAs)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_imgsearch": {
+			"patterns": [
+				{
+					"name": "cmd.imgsearch.ahk",
+					"match": "(\\b(?i:ImageSearch|PixelSearch)\\s*,.*,.*,.*,.*,.*,.*,.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:ImageSearch|PixelSearch)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_pixcolor": {
+			"patterns": [
+				{
+					"name": "cmd.pixcolor.ahk",
+					"match": "(\\b(?i:PixelGetColor)\\s*,.*,.*,.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:PixelGetColor)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_group": {
+			"patterns": [
+				{
+					"name": "cmd.group.ahk",
+					"match": "(\\b(?i:GroupActivate|GroupAdd|GroupClose|GroupDeactivate)\\s*,.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:GroupActivate|GroupAdd|GroupClose|GroupDeactivate)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_run": {
+			"patterns": [
+				{
+					"name": "cmd.run.ahk",
+					"match": "(\\b(?i:Run|RunWait)\\s*(,|%).*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:Run|RunWait)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_send": {
+			"patterns": [
+				{
+					"name": "cmd.send.ahk",
+					"match": "(\\b(?i:Send|SendRaw|SendInput|SendPlay|SendEvent)\\s*(,|%)?.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:Send|SendRaw|SendInput|SendPlay|SendEvent)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_mouse": {
+			"patterns": [
+				{
+					"name": "cmd.mouse.ahk",
+					"match": "(\\b(?i:Click|MouseClick|MouseGetPos)\\s*,?.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:Click|MouseClick|MouseGetPos)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_mousemove": {
+			"patterns": [
+				{
+					"name": "cmd.mouse.ahk",
+					"match": "(\\b(?i:MouseMove)\\s*,.*,.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:MouseMove)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_mousedrag": {
+			"patterns": [
+				{
+					"name": "cmd.mouse.ahk",
+					"match": "(\\b(?i:MouseClickDrag)\\s*,.*,.*,.*,.*,.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:MouseClickDrag)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_sound": {
+			"patterns": [
+				{
+					"name": "cmd.sound.ahk",
+					"match": "(\\b(?i:SoundGet|SoundGetWaveVolume|SoundPlay|SoundSet|SoundSetWaveVolume)\\s*,.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:SoundGet|SoundGetWaveVolume|SoundPlay|SoundSet|SoundSetWaveVolume)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_soundbeep": {
+			"patterns": [
+				{
+					"name": "cmd.soundbeep.ahk",
+					"match": "(\\b(?i:SoundBeep)\\s*,?.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:SoundBeep)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_sendmode": {
+			"patterns": [
+				{
+					"name": "cmd.ini.ahk",
+					"match": "(\\b(?i:SendLevel|SendMode)\\s*,.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:SendLevel|SendMode)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_filereadline": {
+			"patterns": [
+				{
+					"name": "cmd.filereadline.ahk",
+					"match": "(\\b(?i:filereadline)\\s*,.*,.*,.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:filereadline)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"cmd_winget": {
+			"patterns": [
+				{
+					"name": "cmd.winget.ahk",
+					"match": "(\\b(?i:WinGetActiveTitle|WinGetActiveStats|WinGetClass|WinGet|WinGetText|WinGetTitle)\\s*,.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "\\b(?i:WinGetActiveTitle|WinGetActiveStats|WinGetClass|WinGet|WinGetText|WinGetTitle)\\b"
 								},
 								{
 									"include": "#variables"
