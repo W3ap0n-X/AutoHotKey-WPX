@@ -654,7 +654,7 @@
 					"include": "#cmd_controlget"
 				},
 				{
-					"include": "#dir_sa"
+					"include": "#directives"
 				}
 			]
 		},
@@ -3153,6 +3153,19 @@
 				}
 			]
 		},
+		"directives": {
+			"patterns": [
+				{
+					"include": "#dir_sa"
+				},
+				{
+					"include": "#dir_tg"
+				},
+				{
+					"include": "#dir_num"
+				}
+			]
+		},
 		"dir_sa": {
 			"patterns": [
 				{
@@ -3164,6 +3177,70 @@
 								{
 									"name": "support.function.builtin.ahk",
 									"match": "(?i:#NoEnv|#Persistent|#NoTrayIcon|#ErrorStdOut|#InstallKeybdHook|#WinActivateForce|#InstallMouseHook)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"dir_tg": {
+			"patterns": [
+				{
+					"name": "directive.ahk",
+					"match": "(\\s*(?i:#SingleInstance|#LTrim|#UseHook|#MaxThreadsBuffer)\\s*,?\\s*(?i:On|Off|Force|Ignore|Prompt)?\\s*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "(?i:#SingleInstance|#LTrim|#UseHook|#MaxThreadsBuffer)\\b"
+								},
+								{
+									"name": "keyword.ahk",
+									"match": "(?i:On|Off|Force|Ignore|Prompt)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"dir_num": {
+			"patterns": [
+				{
+					"name": "directive.ahk",
+					"match": "(\\s*(?i:#ClipboardTimeout|#HotkeyInterval|#HotkeyModifierTimeout|#IfTimeout|#MaxMem|#KeyHistory|#MaxThreadsPerHotkey|#MaxThreads|#MaxHotkeysPerInterval)\\s*,?\\s*(\\d)*\\s*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "(?i:#ClipboardTimeout|#HotkeyInterval|#HotkeyModifierTimeout|#IfTimeout|#MaxMem|#KeyHistory|#MaxThreadsPerHotkey|#MaxThreads|#MaxHotkeysPerInterval)\\b"
 								},
 								{
 									"include": "#variables"
