@@ -1663,6 +1663,18 @@
 								},
 								{
 									"include": "#expression_forced"
+								},
+								{
+									"include": "#function"
+								},
+								{
+									"include": "#parenthesis"
+								},
+								{
+									"include": "#operators"
+								},
+								{
+									"include": "#squarebrackets"
 								}
 							]
 						}
@@ -3163,6 +3175,18 @@
 				},
 				{
 					"include": "#dir_num"
+				},
+				{
+					"include": "#dir_hs"
+				},
+				{
+					"include": "#dir_inc"
+				},
+				{
+					"include": "#dir_if"
+				},
+				{
+					"include": "#dir_misc"
 				}
 			]
 		},
@@ -3241,6 +3265,134 @@
 								{
 									"name": "support.function.builtin.ahk",
 									"match": "(?i:#ClipboardTimeout|#HotkeyInterval|#HotkeyModifierTimeout|#IfTimeout|#MaxMem|#KeyHistory|#MaxThreadsPerHotkey|#MaxThreads|#MaxHotkeysPerInterval)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"dir_hs": {
+			"patterns": [
+				{
+					"name": "directive.ahk",
+					"match": "(\\s*(?i:#Hotstring)\\s*,?\\s*.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "(?i:#Hotstring)\\b"
+								},
+								{
+									"name": "keyword.ahk",
+									"match": "(?i:NoMouse|EndChars)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"dir_inc": {
+			"patterns": [
+				{
+					"name": "directive.ahk",
+					"match": "(\\s*(?i:#Include|#IncludeAgain)\\s*.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "(?i:#Include|#IncludeAgain)\\b"
+								},
+								{
+									"name": "keyword.ahk",
+									"match": "(?i:\\*i)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"dir_if": {
+			"patterns": [
+				{
+					"name": "directive.ahk",
+					"match": "(\\s*(?i:#IfWinActive|#IfWinExist|#IfWinNotActive|#IfWinNotExist|#Warn)\\s*.*,.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "(?i:#IfWinActive|#IfWinExist|#IfWinNotActive|#IfWinNotExist|#Warn)\\b"
+								},
+								{
+									"include": "#variables"
+								},
+								{
+									"include": "#expression_forced"
+								},
+								{
+									"include": "#string"
+								},
+								{
+									"include": "#escapes"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"dir_misc": {
+			"patterns": [
+				{
+					"name": "directive.ahk",
+					"match": "(\\s*(?i:#If|#CommentFlag|#EscapeChar|#MenuMaskKey|#InputLevel|#DerefChar|#Delimiter)\\s*.*)(?=$)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"name": "support.function.builtin.ahk",
+									"match": "(?i:#If|#CommentFlag|#EscapeChar|#MenuMaskKey|#InputLevel|#DerefChar|#Delimiter)\\b"
 								},
 								{
 									"include": "#variables"
