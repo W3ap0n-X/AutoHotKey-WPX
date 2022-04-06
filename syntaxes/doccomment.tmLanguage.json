@@ -1,0 +1,15 @@
+{
+	"scopeName": "doccomment.injection",
+	"injectionSelector": "L:comment.block",
+	"patterns": [
+	  {
+		"include": "#toadd-keyword"
+	  }
+	],
+	"repository": {
+	  	"toadd-keyword": {
+			"name": "comment.markup.todo"
+			, "match": "(?:\\s+\\+{3}\\s*).*(?<=$)"
+		}
+	}
+  }

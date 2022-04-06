@@ -2,7 +2,7 @@
     "name": "autohotkey-wpx",
     "displayName": "AutoHotKey - WPXCode",
     "description": "Syntax highlighting and language features for AHK",
-    "version": "0.0.1",
+    "version": "0.1.1",
     "publisher": "Weapon-X",
     "engines": {
         "vscode": "^1.43.0"
@@ -17,10 +17,58 @@
             "extensions": [".ahk"],
             "configuration": "./language-configuration.json"
         }],
-        "grammars": [{
-            "language": "ahk",
-            "scopeName": "source.ahk",
-            "path": "./syntaxes/ahk.tmLanguage.json"
-        }]
+        "grammars": [
+            {
+                "language": "ahk",
+                "scopeName": "source.ahk",
+                "path": "./syntaxes/ahk.tmLanguage.json"
+            }
+        ],
+        "viewsContainers": {
+            "activitybar": [
+                {
+                "id": "ahk-explorer",
+                "title": "AHK Explorer",
+                "icon": "./resources/icons/ahk-exp-ico.svg"
+                }
+            ],
+            "panel": [
+                {
+                "id": "ahk-panel"
+                , "title": "AHK Panel"
+                , "icon": "./resources/icons/ahk-exp-ico.svg"
+                }
+            ]
+        },
+        "views":{
+            "ahk-explorer": [
+                {
+                    "id":"ahkView"
+                    , "name": "AHK"
+                },
+                {
+                    "id":"ahkOutline"
+                    , "name": "Outline"
+                },
+                {
+                    "id":"ahkSnippets"
+                    , "name": "Snippets"
+                },
+                {
+                    "id":"ahkBlocks"
+                    , "name": "Blocks"
+                },
+                {
+                    "id":"ahkLabels"
+                    , "name": "Labels"
+                }
+            ],
+            "ahk-panel" : [
+                {
+                    "id": "ahkTest"
+                    , "name": "test"
+                }
+            ]
+        }
     }
 }

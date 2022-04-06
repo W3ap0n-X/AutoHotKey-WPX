@@ -29,18 +29,15 @@
 		"field_assignment": {
 			"patterns": [
 				{
-					"name": "ttkeyword.other.unit.ahk"
+					"name": "field.assignment.ahk"
 					, "begin": "(?<=^)"
-					, "end": ",|$"
+					, "end": ",|\\R"
 					, "patterns": [
 						{
 							"include": "#parenthesis"
 						},
 						{
 							"include": "#labels"
-						},
-						{
-							"include": "#comments"
 						},
 						{
 							"include": "#operators"
@@ -77,6 +74,12 @@
 						},
 						{
 							"include": "#built_inkeywords"
+						},
+						{
+							"include": "#classobj"
+						},
+						{
+							"include": "#comments"
 						}
 					]
 				}
@@ -86,12 +89,12 @@
 			"patterns": [
 				{
 					"name": "comment.line.ahk"
-					, "match": "(?:^\\s*|\\s+)(;.*)"
+					, "match": "(?:^\\s*|\\s+)(;.*)(?=$)"
 				},
 				{
-					"name": "comment.block.ahk"
-					, "begin": "(?:^\\s*|\\s+)(\\/\\*)"
-					, "end": "^\\s*(\\*\\/)"
+					"name": "comment.block"
+					, "begin": "(^\\s*\\/\\*)"
+					, "end": "(?:^\\s*)(?:\\*\\/)"
 				}
 			]
 		},
@@ -100,6 +103,26 @@
 				{
 					"name": "constant.character.escape.ahk",
 					"match": "`(n|r|;|t)?"
+				}
+			]
+		},
+		"classobj": {
+			"patterns": [
+				{
+					"name": "meta.markup.ahk",
+					"begin": "^class",
+					"end": "$",
+					"patterns": [
+						{
+							"include": "#"
+						},
+						{
+							"include": "#"
+						},
+						{
+							"include": "#"
+						}
+					]
 				}
 			]
 		},
@@ -115,7 +138,19 @@
 				},
 				{
 					"name": "support.variable.magic.ahk"
-					, "match": "^\\s*(?!;)(\\S+:{2})(?=\\S)"
+					, "match": "^\\s*(?!;)(\\S+:{2})(?=\\S).*"
+					, "captures": {
+						"0" : {
+							"patterns": [
+								{
+									"include": "#comments"
+								},
+								{
+									"include": "#expression"
+								}
+							]
+						}
+					}
 				}
 			]
 		},
@@ -147,7 +182,7 @@
 		"curlybrackets": {
 			"patterns": [
 				{
-					"name": "ttkeyword.operator.ahk",
+					"name": "meta.class.body.ahk",
 					"begin": "(\\{)",
 					"end": "(\\})",
 					"patterns": [
@@ -194,7 +229,7 @@
 		"squarebrackets": {
 			"patterns": [
 				{
-					"name": "meta.definition.variable.ahk",
+					"name": "meta.require.ahk",
 					"begin": "(\\[)",
 					"end": "(\\])",
 					"patterns": [
@@ -202,7 +237,7 @@
 							"include": "#squarebrackets"
 						},
 						{
-							"include": "#parenthesis"
+							"include": "#parenthesis-off"
 						},
 						{
 							"include": "#strings"
@@ -217,10 +252,97 @@
 				}
 			]
 		},
+		"array": {
+			"patterns": [
+				{
+					"name": "meta.require.ahk",
+					"begin": "(\\{)",
+					"end": "(\\})",
+					"patterns": [
+						{
+							"name" : "array.content",
+							"match":".*(?=\\})" ,
+							"captures": {
+								"0" :{
+									"patterns": [
+										{
+											"name" : "array.fields",
+											"begin": "((?<=,)|(?<={))",
+											"end": "((?=,)|(?=\\}))",
+											"patterns": [
+												{
+													"name": "array.key",
+													"match": "((?<={)|(?<=,))[^,:]*(?=:)" , 
+													"captures": {
+														"0":
+														{
+															"patterns": [
+																{
+																	"name":"meta.fstring.ahk",
+																	"match": ".*(?=\\z)" 
+																}
+															]
+														}
+													}
+													
+		
+												},
+												{
+													"name": "array.val",
+													"match": "(?<=:)[^,:]*((?=\\z)|(?=,))"
+													, "captures": {
+														"0":
+														{
+															"patterns": [
+																{
+																	"name":"variable.other.property",
+																	"match": ".*(?=\\z)" ,
+																	"patterns": [
+																		{
+																			"name" :"array.string",
+																			"patterns": [
+																				{
+																					"name": "string.other.link",
+																					"begin": "\"",
+																					"end": "\"|$",
+																					"patterns": [
+																						{
+																							"include": "#array"
+																						},
+																						{
+																							"include": "#escapes"
+																						},
+																						{
+																							"include": "#squarebrackets"
+																						}
+																					]
+																				}
+																			]
+																		}
+																	]
+																}
+															]
+														}
+													}	
+												}
+
+											]
+										}
+										
+										
+									]
+								}
+							}
+						}
+					]
+				}
+				
+			]
+		},
 		"parenthesis": {
 			"patterns": [
 				{
-					"name": "ttmeta.function.parameters.ahk",
+					"name": "variable.parameter.ahk",
 					"begin": "(\\()",
 					"end": "(\\))",
 					"patterns": [
@@ -228,10 +350,68 @@
 							"include": "#parenthesis"
 						},
 						{
-							"include": "#functionargs"
+							"include": "#operators"
+						},
+						{
+							"include": "#strings"
+						},
+						{
+							"include": "#function"
+						},
+						{
+							"include": "#squarebrackets"
+						},
+						{
+							"include": "#expression-par"
 						},
 						{
 							"include": "#built_invars"
+						}
+					]
+				}
+			]
+		},
+		"parenthesis_old": {
+			"patterns": [
+				{
+					"name": "parenthasis.block.ahk",
+					"begin": "(\\()",
+					"end": "(\\))",
+					"patterns": [
+						{
+							"name": "ttvariable.parameter.ahk",
+							"match":"(.*(?=\\)))" ,
+							"captures": {
+								"0":{
+									"patterns": [
+										{
+											"name": "variable.parameter.ahk",
+											"begin": ",",
+											"end": ",",
+											"patterns": [
+												{
+													"include": "#operators-off"
+												},
+												{
+													"include": "#strings-off"
+												},
+												{
+													"include": "#function-off"
+												},
+												{
+													"include": "#squarebrackets-off"
+												},
+												{
+													"include": "#expression-par-off"
+												},
+												{
+													"include": "#built_invars-off"
+												}
+											]
+										}
+									]
+								}
+							}
 						}
 					]
 				}
@@ -255,7 +435,7 @@
 			"patterns": [
 				{
 					"name": "string.quoted.double.ahk",
-					"match": "(?<=[^\/\\.\\|\\+=\\-\\*\\:]=).*(?=$)",
+					"match": "(?<=[^\/\\.\\|\\+=\\-\\*\\:]=).*((?=$)|(?=,))",
 					"captures": {
 						"0": {
 							"patterns": [
@@ -264,6 +444,9 @@
 								},
 								{
 									"include": "#variables"
+								},
+								{
+									"include": "#comments"
 								}
 							]
 						}
@@ -291,15 +474,38 @@
 				}
 			]
 		},
+		"objects": {
+			"patterns": [
+				{
+					"name": "variable.ahk",
+					"match": "(\\w+)(?=\\..+)",
+					"captures": {
+						"0": {
+							"patterns": [
+								{
+									"include": "#escapes"
+								},
+								{
+									"include": "#built_invars"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
 		"expression_forced": {
 			"patterns": [
 				{
 					"name": "meta.definition.variable.ahk",
 					"begin": "((^)|(\\s+))(%)\\s+",
-					"end": ",|$",
+					"end": "((?=,)|(?=;)|(?=$))",
 					"patterns": [
 						{
 							"include": "#parenthesis"
+						},
+						{
+							"include": "#array"
 						},
 						{
 							"include": "#strings"
@@ -315,6 +521,9 @@
 						},
 						{
 							"include": "#function"
+						},
+						{
+							"include": "#comments"
 						}
 					]
 				}
@@ -325,16 +534,13 @@
 				{
 					"name": "meta.definition.variable.ahk",
 					"begin": "(?<=[\\.:\\+\\-\\/\\|\\<\\>\\!][=])",
-					"end": "(,|(?=\\)))",
+					"end": "((?=,)|(?=\\)))",
 					"patterns": [
 						{
 							"include": "#parenthesis"
 						},
 						{
-							"include": "#squarebrackets"
-						},
-						{
-							"include": "#curlybrackets"
+							"include": "#array"
 						},
 						{
 							"include": "#strings"
@@ -359,17 +565,17 @@
 			"patterns": [
 				{
 					"name": "meta.definition.variable.ahk",
-					"begin": "(?<=[\\.:\\+\\-\\/\\|\\<\\>\\!][=])",
+					"begin": "(?<=[\\.:\\+\\-\\/\\|\\<\\>\\!][=])|(?<=:{2})",
 					"end": ",|$",
 					"patterns": [
 						{
 							"include": "#parenthesis"
 						},
 						{
-							"include": "#squarebrackets"
+							"include": "#array"
 						},
 						{
-							"include": "#curlybrackets"
+							"include": "#squarebrackets"
 						},
 						{
 							"include": "#strings"
@@ -384,7 +590,16 @@
 							"include": "#built_invars"
 						},
 						{
+							"include": "#built_inkeywords"
+						},
+						{
 							"include": "#operators"
+						},
+						{
+							"include": "#objects"
+						},
+						{
+							"include": "#comments"
 						}
 					]
 				}
@@ -662,7 +877,7 @@
 			"patterns": [
 				{
 					"name": "keyword.ahk"
-					, "match": "\\b(?i:byref|global|static|in|or|and|not|new|for|class|true|false)\\b" 
+					, "match": "\\b(?i:byref|global|static|in|or|and|not|new|for|true|false)\\b" 
 				}
 			]
 		},
@@ -1686,7 +1901,7 @@
 			"patterns": [
 				{
 					"name": "cmd.if.ahk",
-					"match": "(\\b(?i:if|else if|else|ifequal|ifexist|ifgreater|ifgreaterorequal|ifinstring|ifless|iflessorequal|ifmsgbox|ifnotequal|ifnotexist|ifnotinstring|ifwinactive|ifwinexist|ifwinnotactive|ifwinnotexist)\\b\\s*(%|,|\\()?\\s*.*)(?=$)",
+					"match": "(\\b(?i:if|else if|else|ifequal|ifexist|ifgreater|ifgreaterorequal|ifinstring|ifless|iflessorequal|ifmsgbox|ifnotequal|ifnotexist|ifnotinstring|ifwinactive|ifwinexist|ifwinnotactive|ifwinnotexist)\\b)",
 					"captures": {
 						"0": {
 							"patterns": [
@@ -1706,7 +1921,7 @@
 									"include": "#expression_forced"
 								},
 								{
-									"include": "#parenthesis"
+									"include": "#deparenthesis"
 								},
 								{
 									"include": "#operators"
